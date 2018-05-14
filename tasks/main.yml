@@ -1,6 +1,12 @@
 ---
 # tasks file for ansible-nginx
 
+- name: Check OS
+  fail:
+    msg: "!!!OS not supported, will stop playing..."
+  when: ansible_os_family != 'Debian' and ansible_os_family != 'RedHat'
+  tags: [always]
+
 - include_tasks: setup-debian.yml
   when: ansible_os_family == 'Debian'
   tags: [packages]
