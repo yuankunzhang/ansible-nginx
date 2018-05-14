@@ -1,2 +1,33 @@
 ---
 # handlers file for ansible-nginx
+
+- name: restart nginx
+  debug:
+    msg: "going to restart nginx"
+  notify:
+    - test config
+    - do restart nginx
+  changed_when: True
+
+- name: reload nginx
+  debug:
+    msg: "going to reload nginx"
+  notify:
+    - test config
+    - do reload nginx
+  changed_when: True
+
+- name: test config
+  command: nginx -t
+  register: result
+  changed_when: "result.rc != 0"
+
+- name: do restart nginx
+  service:
+    name: nginx
+    state: restarted
+
+- name: do reload nginx
+  service:
+    name: nginx
+    state: reloaded
