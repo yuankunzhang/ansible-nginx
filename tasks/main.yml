@@ -9,6 +9,9 @@
   when: ansible_os_family == 'RedHat'
   tags: [packages]
 
+- include_tasks: prepare-directories.yml
+  tags: [packages]
+
 - name: Install Nginx
   package:
     name: nginx

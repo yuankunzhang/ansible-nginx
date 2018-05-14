@@ -11,7 +11,7 @@ events {
 }
 
 http {
-  include    /etc/nginx/mime.types;
+  include    {{ nginx_conf_dir }}/mime.types;
   index    index.html index.htm index.php;
 
   default_type application/octet-stream;
