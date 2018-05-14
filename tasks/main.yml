@@ -3,17 +3,21 @@
 
 - include_tasks: setup-debian.yml
   when: ansible_os_family == 'Debian'
+  tags: [packages]
 
 - include_tasks: setup-redhat.yml
   when: ansible_os_family == 'RedHat'
+  tags: [packages]
 
 - name: Install Nginx
   package:
     name: nginx
     state: present
+  tags: [packages]
 
 - name: Copy config
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     mode: 0644
+  tags: [configuration]
