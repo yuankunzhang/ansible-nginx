@@ -14,16 +14,18 @@ nginx_conf_dir_user:  root
 nginx_conf_dir_group: root
 nginx_conf_dir_mode:  0644
 
-nginx_conf_user:                           "{{ nginx_user }}"
-nginx_conf_worker_processes:               "{{ ansible_processor_vcpus }}"
-nginx_conf_error_log:                      "{{ nginx_log_dir }}/error.log"
-nginx_conf_pidfile:                        /var/run/nginx.pid
-nginx_conf_worker_rlimit_nofile:           1024
-nginx_conf_worker_connections:             1024
-nginx_conf_access_log:                     "{{ nginx_log_dir }}/access.log main"
-nginx_conf_sendfile:                       "on"
-nginx_conf_tcp_nopush:                     "on"
-nginx_conf_server_names_hash_bucket_size:  128
+nginx_conf_user:                  "{{ nginx_user }}"
+nginx_conf_worker_processes:      auto
+nginx_conf_error_log:             "{{ nginx_log_dir }}/error.log"
+nginx_conf_pidfile:               /var/run/nginx.pid
+nginx_conf_worker_rlimit_nofile:  1024
+nginx_conf_worker_connections:    1024
+nginx_conf_access_log:            "{{ nginx_log_dir }}/access.log main"
+nginx_conf_sendfile:              "on"
+nginx_conf_tcp_nopush:            "on"
+nginx_conf_tcp_nodelay:           "on"
+nginx_conf_keepalive_timeout:     65
+nginx_conf_keepalive_requests:    100
 nginx_conf_log_format: |
     main '$remote_addr - $remote_user [$time_local]  $status '
         '"$request" $body_bytes_sent "$http_referer" '

@@ -12,14 +12,21 @@ events {
 
 http {
   include    {{ nginx_conf_dir }}/mime.types;
-  index    index.html index.htm index.php;
-
+  index      index.html;
   default_type application/octet-stream;
+
   log_format   {{ nginx_conf_log_format }};
   access_log   {{ nginx_conf_access_log }};
+
   sendfile     {{ nginx_conf_sendfile }};
   tcp_nopush   {{ nginx_conf_tcp_nopush }};
-  server_names_hash_bucket_size {{ nginx_conf_server_names_hash_bucket_size }};
+  tcp_nodelay  {{ nginx_conf_tcp_nodelay }};
 
-  include /etc/nginx/conf.d/*.conf;
+  keepalive_timeout  {{ nginx_conf_keepalive_timeout }};
+  keepalive_requests {{ nginx_conf_keepalive_requests }};
+
+  include {{ nginx_conf_dir }}/conf.d/*.conf;
+  include {{ nginx_conf_dir }}/site-enabled/*.conf;
 }
+
+# TODO: stream { }
