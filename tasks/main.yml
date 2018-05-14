@@ -1,2 +1,13 @@
 ---
 # tasks file for ansible-nginx
+
+- include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: setup-redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Nginx
+  package:
+    name: nginx
+    state: present
