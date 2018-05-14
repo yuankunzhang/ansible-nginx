@@ -13,6 +13,22 @@ Role Variables
 
 A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
+Nginx config parameters:
+
+```yaml
+nginx_conf_user
+nginx_conf_worker_processes
+nginx_conf_error_log
+nginx_conf_pidfile
+nginx_conf_worker_rlimit_nofile
+nginx_conf_worker_connections
+nginx_conf_access_log
+nginx_conf_sendfile
+nginx_conf_tcp_nopush
+nginx_conf_server_names_hash_bucket_size
+nginx_conf_log_format
+```
+
 Dependencies
 ------------
 

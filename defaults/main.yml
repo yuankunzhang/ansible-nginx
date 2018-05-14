@@ -1,2 +1,19 @@
 ---
 # defaults file for ansible-nginx
+
+nginx_user: nginx
+
+nginx_conf_user:                           "{{ nginx_user }}"
+nginx_conf_worker_processes:               "{{ ansible_processor_vcpus }}"
+nginx_conf_error_log:                      /var/log/nginx/error.log
+nginx_conf_pidfile:                        /var/run/nginx.pid
+nginx_conf_worker_rlimit_nofile:           1024
+nginx_conf_worker_connections:             1024
+nginx_conf_access_log:                     "/var/log/nginx/access.log main"
+nginx_conf_sendfile:                       "on"
+nginx_conf_tcp_nopush:                     "on"
+nginx_conf_server_names_hash_bucket_size:  128
+nginx_conf_log_format: |
+    main '$remote_addr - $remote_user [$time_local]  $status '
+        '"$request" $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"'

@@ -10,3 +10,11 @@
     description: Nginx Repository
     enabled: yes
     gpgcheck: yes
+
+- name: Install SElinux Python bindings
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libselinux-python
+    - libsemanage-python
