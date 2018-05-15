@@ -6,7 +6,8 @@ pid        {{ nginx_conf_main_pidfile }};
 worker_rlimit_nofile {{ nginx_conf_main_worker_rlimit_nofile }};
 
 {% for param in nginx_conf_main_extra_params %}
-{{ param }};
+{{ param }}{% if param.rstrip()[-1] != '}' %};{% endif %}
+
 {% endfor %}
 
 events {
@@ -14,7 +15,8 @@ events {
   use {{ nginx_conf_events_use }};
 
 {% for param in nginx_conf_events_extra_params %}
-  {{ param }};
+  {{ param }}{% if param.rstrip()[-1] != '}' %};{% endif %}
+
 {% endfor %}
 }
 
@@ -34,7 +36,8 @@ http {
   keepalive_requests {{ nginx_conf_http_keepalive_requests }};
 
 {% for param in nginx_conf_http_extra_params %}
-  {{ param }};
+  {{ param }}{% if param.rstrip()[-1] != '}' %};{% endif %}
+
 {% endfor %}
 
 {% for server in nginx_conf_http_servers %}
@@ -44,7 +47,8 @@ http {
 
 stream {
 {% for param in nginx_conf_stream_extra_params %}
-  {{ param }};
+  {{ param }}{% if param.rstrip()[-1] != '}' %};{% endif %}
+
 {% endfor %}
 
 {% for server in nginx_conf_stream_servers %}
