@@ -1,32 +1,58 @@
 ---
 # defaults file for ansible-nginx
 
-nginx_user:   nginx
-nginx_group:  "{{ nginx_user }}"
+# basics.
+nginx_user:  nginx
+nginx_group: "{{ nginx_user }}"
 
+# log directory.
 nginx_log_dir:        /var/log/nginx
 nginx_log_dir_user:   "{{ nginx_user }}"
 nginx_log_dir_group:  "{{ nginx_group }}"
 nginx_log_dir_mode:   0644
 
+# config directory.
 nginx_conf_dir:       /etc/nginx
 nginx_conf_dir_user:  root
 nginx_conf_dir_group: root
 nginx_conf_dir_mode:  0644
 
-nginx_conf_user:                  "{{ nginx_user }}"
-nginx_conf_worker_processes:      auto
-nginx_conf_error_log:             "{{ nginx_log_dir }}/error.log"
-nginx_conf_pidfile:               /var/run/nginx.pid
-nginx_conf_worker_rlimit_nofile:  1024
-nginx_conf_worker_connections:    1024
-nginx_conf_access_log:            "{{ nginx_log_dir }}/access.log main"
-nginx_conf_sendfile:              "on"
-nginx_conf_tcp_nopush:            "on"
-nginx_conf_tcp_nodelay:           "on"
-nginx_conf_keepalive_timeout:     65
-nginx_conf_keepalive_requests:    100
-nginx_conf_log_format: |
+# parameters in the main context.
+## you can override the followings:
+nginx_conf_main_user:                 "{{ nginx_user }}"
+nginx_conf_main_worker_processes:     auto
+nginx_conf_main_error_log:            "{{ nginx_log_dir }}/error.log"
+nginx_conf_main_pidfile:              /var/run/nginx.pid
+nginx_conf_main_worker_rlimit_nofile: 1024
+## or you can add additional to this array:
+nginx_conf_main_extra_params:         []
+
+# parameters in the events context.
+## you can override the followings:
+nginx_conf_events_worker_connections: 1024
+nginx_conf_events_use:                epoll
+## or you can add additional to this array:
+nginx_conf_events_extra_params:       []
+
+# parameters in the http context.
+## you can override the followings:
+nginx_conf_http_access_log:         "{{ nginx_log_dir }}/access.log main"
+nginx_conf_http_sendfile:           "on"
+nginx_conf_http_tcp_nopush:         "on"
+nginx_conf_http_tcp_nodelay:        "on"
+nginx_conf_http_keepalive_timeout:  65
+nginx_conf_http_keepalive_requests: 100
+nginx_conf_http_log_format: |
     main '$remote_addr - $remote_user [$time_local]  $status '
-        '"$request" $body_bytes_sent "$http_referer" '
-        '"$http_user_agent" "$http_x_forwarded_for"'
+         '"$request" $body_bytes_sent "$http_referer" '
+         '"$http_user_agent" "$http_x_forwarded_for"'
+## or you can add additional to this array:
+nginx_conf_http_extra_params:       []
+## and put your server blocks in this array:
+nginx_conf_http_servers:            []
+
+# parameters in the stream context.
+## you can add additional to this array:
+nginx_conf_stream_extra_params: []
+## and put your stream blocks in this array:
+nginx_conf_stream_servers:      []
